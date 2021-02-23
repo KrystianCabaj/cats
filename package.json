@@ -1,0 +1,26 @@
+{
+  "name": "cats",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.32.8"
+  },
+  "scripts": {
+    "start": "parcel index.html",
+    "build": " parcel build index.html --dist-dir"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrystianCabaj/cats.git"
+  },
+  "keywords": [],
+  "author": "Krystian Cabaj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrystianCabaj/cats/issues"
+  },
+  "homepage": "https://github.com/KrystianCabaj/cats#readme"
+}

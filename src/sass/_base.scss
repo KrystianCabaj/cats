@@ -1,0 +1,17 @@
+@import "./variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 62.5%;
+  background-image: linear-gradient(
+    to right top,
+    rgba($color-primary, 1),
+    rgba($color-accent, 1)
+  );
+  min-height: 100vh;
+}

@@ -4,12 +4,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/sass/main.scss" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
+
     <title>Magnificent pictures of cats!</title>
   </head>
   <body>
-    Hello world
-
-
-    <script type="module" src="./src/js/index.js"></script>
+    <header class="header">
+      <h1>
+        Welcome to Kittens, where you can find magnificent pictures of cats
+      </h1>
+      <form class="search" action="#">
+        <input
+          type="text"
+          class="search__input"
+          placeholder="Look for some cute kittens"
+        />
+        <button class="search__button">Search</button>
+      </form>
+    </header>
   </body>
 </html>

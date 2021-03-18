@@ -1,1 +1,13 @@
+.polaroid-item {
+  padding: 1.5rem;
+  padding-bottom: 2.4rem;
+  box-shadow: $box-sha-2;
+  background-color: $color-grey-light-5;
+  overflow: hidden;
+  border-radius: 5px;
 
+  img {
+    height: auto;
+    width: 100%;
+  }
+}

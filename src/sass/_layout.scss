@@ -1,1 +1,11 @@
+.swiper-container {
+  height: 40rem;
 
+  // background-color: $color-grey-light-5;
+
+  .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

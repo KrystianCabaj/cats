@@ -1,63 +1,81 @@
-import Swiper, { Navigation, Pagination } from "swiper";
-import "swiper/swiper-bundle.css";
+import api from "./api.js";
+import axios from "axios";
+import swiperContainter, { renderSlide } from "./SwiperContainter";
+import elements from "./elements.js";
+const { form, headerContainer, input, button, swiperContainer } = elements;
+const { API_HOST, API_KEY, BY_BREED } = api;
 
-import "regenerator-runtime/runtime";
-
-Swiper.use([Navigation, Pagination]);
-
-const form = document.querySelector(".search");
-const headerContainer = document.querySelector(".header");
 // const h1 = document.querySelector("h1");
+window.storage = {};
 
-const createMarkup = function (url) {
-  const markup = /* html */ `
-    <div class="swiper-container">
-    
-      <div class="swiper-wrapper">       
-          <div class="swiper-slide polaroid-item"><img src="../img(temporary)/cat-2.png" alt=""></div>
-          <div class="swiper-slide polaroid-item"><img src="./src/img(temporary)/cat-3.png" alt=""></div>
-          <div class="swiper-slide polaroid-item"><img src="./src/img(temporary)/cat-3.png" alt=""></div>
-      </div>
+const photosOfSpecificBreed = async function (breed) {
+  try {
+    axios.defaults.headers.common["x-api-key"] = API_KEY;
 
-        <div class="swiper-pagination"></div>
+    // https://api.thecatapi.com/v1/images/search?breed_ids=beng
+    const response = await axios.get(`${API_HOST}${BY_BREED}${breed}`, {
+      params: { limit: 10, size: "full" },
+    });
+    // console.log(response);
 
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    </div>
-    `;
+    const data = response.data.map((data) => data.url);
 
-  headerContainer.insertAdjacentHTML("afterend", markup);
+    // console.log(data);
+
+    swiperContainter(data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  const swiperContainer = document.getElementById("swiper");
+  const cutName = cutBreedName(input.value);
+  if (input.value === "") return;
+  input.value = "";
+  if (cutName === " ") return console.log("Wrong breed!");
+
   if (!headerContainer.classList.contains("changeDirection"))
     headerContainer.classList.add("changeDirection");
 
-  createMarkup("./src/img(temporary)/cat-3.png");
+  if (swiperContainer) swiperContainer.remove();
 
-  new Swiper(".swiper-container", {
-    spaceBetween: 40,
-    slidesPerView: "2",
-    pagination: {
-      el: ".swiper-pagination",
-    },
-    navigation: {
-      nextEl: ".swiper-button-next",
-      prevEl: ".swiper-button-prev",
-    },
-  });
+  photosOfSpecificBreed(cutName);
 });
 
-// const renderPhoto = function (breed) {
-//   const markup = "";
-// };
+const breedList = async function () {
+  try {
+    const response = await axios.get(`https://api.thecatapi.com/v1/breeds`);
+    // console.log(response.data);
+    const breedName = response.data.map((data) => data.name);
+    const breedID = response.data.map((data) => data.id);
 
-const breedList = async function (breed) {
-  const res = await fetch(
-    `https://api.thecatapi.com/v1/breeds/search?q=${breed}`
-  );
-  const data = await res.json();
-  console.log(data);
+    return { breedID, breedName };
+  } catch (err) {
+    console.log(err);
+  }
 };
-breedList("sib");
+//
+// wybrać button i dać mi disable
+const loadBreedList = function () {
+  button.removeAttribute("disabled");
+  // console.log(window.storage.breeds);
+};
+
+(async function () {
+  storage.breeds = await breedList();
+  loadBreedList();
+  console.log("Done");
+})();
+
+// psedua klasa disabled w cssie dorób
+const cutBreedName = function (fullName) {
+  const breedName = window.storage.breeds.breedName;
+  const breedID = window.storage.breeds.breedID;
+
+  const index = breedName.indexOf(fullName);
+  if (!breedName.includes(fullName)) return " ";
+
+  return breedID[index];
+};

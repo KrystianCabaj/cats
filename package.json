@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "api.js": "0.0.5",
+    "axios": "^0.21.1",
     "swiper": "^6.5.0"
   },
   "devDependencies": {

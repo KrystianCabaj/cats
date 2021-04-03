@@ -13,6 +13,11 @@
     max-width: 50rem;
     // transition: height 0.2s;
   }
+
+  .wrong-input {
+    width: 57%;
+    height: 14%;
+  }
 }
 
 .search {
@@ -31,6 +36,8 @@
     border: none;
     color: $color-grey-light-4;
     border-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
     width: 90%;
     padding: 0.9rem 1rem;
     padding-right: 2rem;
@@ -73,7 +80,6 @@
       rgba($color-primary, 1)
     );
     background-size: 200% 100%;
-    border-bottom-right-radius: 10px;
     border-top-right-radius: 10px;
     box-shadow: none;
     outline: none;

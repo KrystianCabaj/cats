@@ -3,4 +3,5 @@ export default {
   headerContainer: document.querySelector(".header"),
   input: document.querySelector("input"),
   button: document.querySelector("button"),
+  predictionList: document.getElementById("predictionList"),
 };

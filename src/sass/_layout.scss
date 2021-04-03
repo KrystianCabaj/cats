@@ -9,3 +9,20 @@
     justify-content: center;
   }
 }
+
+.search-list {
+  width: 50rem;
+  background-color: #fff;
+  // height: 10rem;
+  font-size: 1rem;
+  color: $text-secondary;
+  border-top: 1px solid $color-accent;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  background-color: $color-grey-light-3;
+
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}

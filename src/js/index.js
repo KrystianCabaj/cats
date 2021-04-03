@@ -2,7 +2,14 @@ import api from "./api.js";
 import axios from "axios";
 import swiperContainter, { renderSlide } from "./SwiperContainter";
 import elements from "./elements.js";
-const { form, headerContainer, input, button, swiperContainer } = elements;
+const {
+  form,
+  headerContainer,
+  input,
+  button,
+  swiperContainer,
+  predictionList,
+} = elements;
 const { API_HOST, API_KEY, BY_BREED } = api;
 
 // const h1 = document.querySelector("h1");
@@ -28,21 +35,62 @@ const photosOfSpecificBreed = async function (breed) {
   }
 };
 
+let predictionTimeout = null;
+
+input.addEventListener("input", function (e) {
+  const searchString = e.target.value;
+  if (searchString.length < 3) return;
+  if (predictionTimeout) clearTimeout(predictionTimeout);
+  predictionTimeout = setTimeout(() => {
+    const breedName = window.storage.breeds.breedName;
+    const filteredBreeds = breedName.filter((character) =>
+      character.includes(searchString)
+    );
+
+    console.log(filteredBreeds);
+    predictionList.innerHTML = "";
+
+    if (!filteredBreeds.length) return;
+
+    const markup = filteredBreeds.map((name) => serachMarkup(name));
+    console.log(markup);
+    predictionList.insertAdjacentHTML("beforeend", markup.join(""));
+    predictionList.querySelectorAll("[data-id]").forEach((element) =>
+      element.addEventListener("click", function (e) {
+        input.value = e.target.innerText;
+        console.log(e.target.getAttribute("data-id"));
+        handleFormSumbition(e.target.getAttribute("data-id"));
+      })
+    );
+  }, 500);
+});
+
+function serachMarkup(name) {
+  const id = window.storage.breeds.breedName.indexOf(name);
+  const html = /* html */ `
+    <li data-id="${window.storage.breeds.breedID[id]}">${name}</li>`;
+  return html;
+}
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  const cutName = getBreedID(input.value);
+
+  handleFormSumbition(cutName);
+});
+
+const handleFormSumbition = function (id) {
   const swiperContainer = document.getElementById("swiper");
-  const cutName = cutBreedName(input.value);
-  if (input.value === "") return;
+  if (!input.value) return;
   input.value = "";
-  if (cutName === " ") return console.log("Wrong breed!");
 
   if (!headerContainer.classList.contains("changeDirection"))
     headerContainer.classList.add("changeDirection");
 
   if (swiperContainer) swiperContainer.remove();
 
-  photosOfSpecificBreed(cutName);
-});
+  photosOfSpecificBreed(id);
+};
 
 const breedList = async function () {
   try {
@@ -51,6 +99,10 @@ const breedList = async function () {
     const breedName = response.data.map((data) => data.name);
     const breedID = response.data.map((data) => data.id);
 
+    const conectedArrays = breedName.reduce((acc, name, index) => {
+      return [...acc, { name, id: breedID[index] }];
+    }, []);
+    console.log(conectedArrays);
     return { breedID, breedName };
   } catch (err) {
     console.log(err);
@@ -70,7 +122,7 @@ const loadBreedList = function () {
 })();
 
 // psedua klasa disabled w cssie dorób
-const cutBreedName = function (fullName) {
+const getBreedID = function (fullName) {
   const breedName = window.storage.breeds.breedName;
   const breedID = window.storage.breeds.breedID;
 

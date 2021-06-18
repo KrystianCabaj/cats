@@ -23,7 +23,6 @@ const getPhotos = async function (breed) {
     const response = await axios.get(`${API_HOST}${BY_BREED}${breed}`, {
       params: { limit: 12, size: "full" },
     });
-    console.log(response);
 
     const data = response.data.map((data) => data.url);
 
@@ -31,7 +30,6 @@ const getPhotos = async function (breed) {
 
     return data;
   } catch (err) {
-    console.log(err);
     return null;
   }
 };
@@ -50,20 +48,19 @@ input.addEventListener("input", function (e) {
       character.includes(searchString)
     );
 
-    console.log(filteredBreeds);
     predictionList.innerHTML = "";
     olList.style.display = "none";
 
     if (!filteredBreeds.length) return;
 
     const markup = filteredBreeds.map((name) => serachMarkup(name));
-    console.log(markup);
+
     predictionList.insertAdjacentHTML("beforeend", markup.join(""));
     olList.style.display = "block";
     predictionList.querySelectorAll("[data-id]").forEach((element) =>
       element.addEventListener("click", function (e) {
         input.value = e.target.innerText;
-        console.log(e.target.getAttribute("data-id"));
+
         handleFormSumbition(e.target.getAttribute("data-id"));
         predictionList.innerHTML = "";
         olList.style.display = "none";
@@ -117,7 +114,6 @@ const breedList = async function () {
     const conectedArrays = breedName.reduce((acc, name, index) => {
       return [...acc, { name, id: breedID[index] }];
     }, []);
-    console.log(conectedArrays);
 
     return { breedID, breedName };
   } catch (err) {
@@ -132,7 +128,6 @@ const loadBreedList = function () {
 (async function () {
   storage.breeds = await breedList();
   loadBreedList();
-  console.log("Done");
 })();
 
 const getBreedID = function (fullName) {

@@ -2,7 +2,7 @@
   "name": "cats",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "default": "index.js",
   "dependencies": {
     "api.js": "0.0.5",
     "axios": "^0.21.1",
@@ -15,7 +15,7 @@
   },
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html --dist-dir"
+    "build": "parcel build index.html --out-dir ./dist"
   },
   "repository": {
     "type": "git",

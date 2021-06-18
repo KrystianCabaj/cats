@@ -5,29 +5,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="src/sass/main.scss" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />  
     <script defer src="src/js/index.js"></script>
+    <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap"
+    rel="stylesheet"
+    />
 
     <title>Magnificent pictures of cats!</title>
   </head>
  
     <header class="header">
-        <h1>
+      <div class="header__box">
+        <h1 class="heading-primary">
           Welcome to Kittens, where you can find magnificent pictures of cats
         </h1>
-        <form class="search" action="submit">
+      </div>
+        <div class="search">
+        <form class="search__form" action="submit">
           <input
             type="text"
             class="search__input"
             placeholder="Look for some cute kittens"
             />
           <button disabled class="search__button">Search</button>
+          <ol class="search-list" id="predictionList"></ol>
+        </div>
         </form>
-        <ol class="search-list" id="predictionList"></ol>
-    </header> 
+      </header> 
   </body>
 </html>

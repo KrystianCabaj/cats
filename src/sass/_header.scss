@@ -1,34 +1,40 @@
 .header {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
+  padding: 5rem 2rem 0;
 
-  padding: 0 0 2rem;
-
-  height: calc(50% + 5rem);
-  transition: all 0.5s;
-
-  h1 {
+  &__box {
     max-width: 50rem;
-    // transition: height 0.2s;
-  }
-
-  .wrong-input {
-    width: 57%;
-    height: 14%;
+    margin: 0 auto 2rem;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
   }
 }
 
 .search {
-  position: relative;
   display: flex;
-  margin-top: 3rem;
   justify-content: center;
-  min-width: 50rem;
 
-  * {
-    box-shadow: $box-sha-2;
+  &__form {
+    max-width: 50rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    flex-grow: 1;
+
+    &:focus-within {
+      .search-list {
+        width: 100%;
+        left: 0;
+      }
+      .search__input {
+        outline: none;
+        background-color: $color-grey-light-3;
+        width: 100%;
+      }
+      .search__button {
+        right: 0;
+      }
+    }
   }
 
   &__input {
@@ -38,34 +44,34 @@
     border-radius: 10px;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
-    width: 90%;
+    width: 100%;
     padding: 0.9rem 1rem;
     padding-right: 2rem;
-    background-color: $color-grey-light-2;
+    // background-color: $color-grey-light-2;
+    background-color: #fff;
     transition: width 0.2s;
-
-    &:focus {
-      outline: none;
-      background-color: $color-grey-light-3;
-      width: 100%;
-    }
+    border-bottom: 1px solid $color-grey-light-2;
 
     &::placeholder {
       font-family: "Roboto", sans-serif;
       font-weight: 100;
-      // letter-spacing: 0.75px;
+      letter-spacing: 0.75px;
     }
   }
 
-  &__input:focus + &__button {
-    right: 0;
-  }
+  // &__input:focus + &__button {
+  //   right: 0;
+  // }
+
+  // &__input:focus + &__button {
+  //   right: 0;
+  // }
 
   &__button {
     position: absolute;
     bottom: -0.8px;
     top: -0.8px;
-    right: calc(5% - 0.5px);
+    right: 0;
     font-size: 1.4rem;
     letter-spacing: 1px;
     font-family: "Roboto", sans-serif;
@@ -99,8 +105,9 @@
 .changeDirection {
   height: 5rem;
 
-  h1 {
+  .header__box {
     height: 0;
     opacity: 0;
+    margin: 0;
   }
 }

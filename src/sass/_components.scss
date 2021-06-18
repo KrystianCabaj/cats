@@ -1,13 +1,18 @@
 .polaroid-item {
-  padding: 1.5rem;
-  padding-bottom: 2.4rem;
-  box-shadow: $box-sha-2;
-  background-color: $color-grey-light-5;
-  overflow: hidden;
-  border-radius: 5px;
+  .polaroid-fig {
+    width: auto;
+    height: 35rem;
+    padding-bottom: 3.5rem;
+    background-color: #fff;
+    // border-bottom-right-radius: 10px;
+    // border-bottom-left-radius: 10px;
+
+    max-width: 50rem;
+  }
 
   img {
-    max-height: 100%;
+    object-fit: contain;
+    height: 100%;
     width: 100%;
   }
 }

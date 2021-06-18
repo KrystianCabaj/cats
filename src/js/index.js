@@ -9,13 +9,14 @@ const {
   button,
   swiperContainer,
   predictionList,
+  olList,
 } = elements;
 const { API_HOST, API_KEY, BY_BREED } = api;
 
 // const h1 = document.querySelector("h1");
 window.storage = {};
 
-const photosOfSpecificBreed = async function (breed) {
+const getPhotos = async function (breed) {
   try {
     axios.defaults.headers.common["x-api-key"] = API_KEY;
 
@@ -23,15 +24,16 @@ const photosOfSpecificBreed = async function (breed) {
     const response = await axios.get(`${API_HOST}${BY_BREED}${breed}`, {
       params: { limit: 10, size: "full" },
     });
-    // console.log(response);
+    console.log(response);
 
     const data = response.data.map((data) => data.url);
 
-    // console.log(data);
+    if (!response.data[0].breeds.length) return null;
 
-    swiperContainter(data);
+    return data;
   } catch (err) {
     console.log(err);
+    return null;
   }
 };
 
@@ -39,8 +41,11 @@ let predictionTimeout = null;
 
 input.addEventListener("input", function (e) {
   const searchString = e.target.value;
-  if (searchString.length < 3) return;
   if (predictionTimeout) clearTimeout(predictionTimeout);
+  if (searchString.length < 3) {
+    olList.style.display = "none";
+    return;
+  }
   predictionTimeout = setTimeout(() => {
     const breedName = window.storage.breeds.breedName;
     const filteredBreeds = breedName.filter((character) =>
@@ -49,17 +54,21 @@ input.addEventListener("input", function (e) {
 
     console.log(filteredBreeds);
     predictionList.innerHTML = "";
+    olList.style.display = "none";
 
     if (!filteredBreeds.length) return;
 
     const markup = filteredBreeds.map((name) => serachMarkup(name));
     console.log(markup);
     predictionList.insertAdjacentHTML("beforeend", markup.join(""));
+    olList.style.display = "block";
     predictionList.querySelectorAll("[data-id]").forEach((element) =>
       element.addEventListener("click", function (e) {
         input.value = e.target.innerText;
         console.log(e.target.getAttribute("data-id"));
         handleFormSumbition(e.target.getAttribute("data-id"));
+        predictionList.innerHTML = "";
+        olList.style.display = "none";
       })
     );
   }, 500);
@@ -68,28 +77,35 @@ input.addEventListener("input", function (e) {
 function serachMarkup(name) {
   const id = window.storage.breeds.breedName.indexOf(name);
   const html = /* html */ `
-    <li data-id="${window.storage.breeds.breedID[id]}">${name}</li>`;
+    <li class="search-list__suggestion" data-id="${window.storage.breeds.breedID[id]}">${name}</li>`;
   return html;
 }
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
+  if (!input.value) return;
   const cutName = getBreedID(input.value);
 
+  olList.style.display = "none";
+
+  if (predictionTimeout) clearTimeout(predictionTimeout);
   handleFormSumbition(cutName);
 });
 
-const handleFormSumbition = function (id) {
+const handleFormSumbition = async function (id) {
   const swiperContainer = document.getElementById("swiper");
   if (!input.value) return;
   input.value = "";
+
+  const photos = await getPhotos(id);
+  if (!photos) return;
 
   if (!headerContainer.classList.contains("changeDirection"))
     headerContainer.classList.add("changeDirection");
 
   if (swiperContainer) swiperContainer.remove();
 
-  photosOfSpecificBreed(id);
+  swiperContainter(photos);
 };
 
 const breedList = async function () {

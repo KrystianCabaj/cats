@@ -6,16 +6,44 @@
   box-sizing: border-box;
 }
 
+html {
+  font-size: 62.5%;
+}
+
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   line-height: 1.6;
-  font-size: 62.5%;
+  height: 100vh;
+
   background-image: linear-gradient(
     to right top,
     rgba($color-primary, 1),
     rgba($color-accent, 1)
   );
-  height: 100vh;
-  padding: 3rem 15rem;
+  background-repeat: no-repeat;
+}
+
+@include media-query($breakpoint-s) {
+  html {
+    font-size: 68%;
+  }
+}
+
+@include media-query($breakpoint-m) {
+  html {
+    font-size: 75%;
+  }
+}
+
+@include media-query($breakpoint-l) {
+  html {
+    font-size: 85%;
+  }
+}
+
+@include media-query($breakpoint-xl) {
+  html {
+    font-size: 95%;
+  }
 }

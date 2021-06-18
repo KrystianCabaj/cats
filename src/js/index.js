@@ -12,17 +12,16 @@ const {
   olList,
 } = elements;
 const { API_HOST, API_KEY, BY_BREED } = api;
+let predictionTimeout = null;
 
-// const h1 = document.querySelector("h1");
 window.storage = {};
 
 const getPhotos = async function (breed) {
   try {
     axios.defaults.headers.common["x-api-key"] = API_KEY;
 
-    // https://api.thecatapi.com/v1/images/search?breed_ids=beng
     const response = await axios.get(`${API_HOST}${BY_BREED}${breed}`, {
-      params: { limit: 10, size: "full" },
+      params: { limit: 12, size: "full" },
     });
     console.log(response);
 
@@ -37,10 +36,9 @@ const getPhotos = async function (breed) {
   }
 };
 
-let predictionTimeout = null;
-
 input.addEventListener("input", function (e) {
-  const searchString = e.target.value;
+  const searchString =
+    e.target.value.charAt(0).toUpperCase() + input.value.slice(1);
   if (predictionTimeout) clearTimeout(predictionTimeout);
   if (searchString.length < 3) {
     olList.style.display = "none";
@@ -84,7 +82,9 @@ function serachMarkup(name) {
 form.addEventListener("submit", function (e) {
   e.preventDefault();
   if (!input.value) return;
-  const cutName = getBreedID(input.value);
+  const cutName = getBreedID(
+    input.value.charAt(0).toUpperCase() + input.value.slice(1)
+  );
 
   olList.style.display = "none";
 
@@ -111,7 +111,6 @@ const handleFormSumbition = async function (id) {
 const breedList = async function () {
   try {
     const response = await axios.get(`https://api.thecatapi.com/v1/breeds`);
-    // console.log(response.data);
     const breedName = response.data.map((data) => data.name);
     const breedID = response.data.map((data) => data.id);
 
@@ -119,16 +118,15 @@ const breedList = async function () {
       return [...acc, { name, id: breedID[index] }];
     }, []);
     console.log(conectedArrays);
+
     return { breedID, breedName };
   } catch (err) {
     console.log(err);
   }
 };
-//
-// wybrać button i dać mi disable
+
 const loadBreedList = function () {
   button.removeAttribute("disabled");
-  // console.log(window.storage.breeds);
 };
 
 (async function () {
@@ -137,12 +135,11 @@ const loadBreedList = function () {
   console.log("Done");
 })();
 
-// psedua klasa disabled w cssie dorób
 const getBreedID = function (fullName) {
   const breedName = window.storage.breeds.breedName;
   const breedID = window.storage.breeds.breedID;
-
   const index = breedName.indexOf(fullName);
+
   if (!breedName.includes(fullName)) return " ";
 
   return breedID[index];

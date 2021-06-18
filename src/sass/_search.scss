@@ -1,0 +1,117 @@
+.search {
+  display: flex;
+  justify-content: center;
+
+  &__form {
+    max-width: 50rem;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    flex-grow: 1;
+
+    &:focus-within {
+      .search-list {
+        width: 100%;
+        left: 0;
+      }
+      .search__input {
+        outline: none;
+        background-color: $color-grey-light-3;
+        width: 100%;
+      }
+      .search__button {
+        right: 0;
+      }
+    }
+  }
+
+  &__input {
+    font-size: 1.2rem;
+    border: none;
+    color: $color-grey-light-4;
+    border-radius: 10px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    padding-right: 2rem;
+    background-color: $color-white;
+    transition: width 0.2s;
+    border-bottom: 1px solid $color-grey-light-2;
+
+    &::placeholder {
+      font-family: "Roboto", sans-serif;
+      font-weight: 100;
+      letter-spacing: 0.75px;
+    }
+  }
+
+  &__button {
+    position: absolute;
+    bottom: -0.8px;
+    top: -0.8px;
+    right: 0;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    padding: 0rem 1rem;
+    color: $color-grey-light-5;
+    background-image: linear-gradient(
+      to right top,
+      rgba($color-primary, 1),
+      rgba($color-accent, 1),
+      rgba($color-accent, 1),
+      rgba($color-primary, 1)
+    );
+    background-size: 200% 100%;
+    border-top-right-radius: 10px;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    transition: all 0.2s;
+
+    &:hover {
+      background-position: 100% 100%;
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  &-list {
+    position: absolute;
+    display: none;
+    top: 100%;
+    left: 5%;
+    width: 90%;
+    background-color: $color-white;
+    font-size: 1.2rem;
+    color: $text-secondary;
+    border-top: 1px solid $color-accent;
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    background-color: $color-grey-light-3;
+    padding: 0.5rem 0 0 0;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    z-index: 4;
+    box-shadow: $box-sha-3;
+    transition: width 0.2s, left 0.2s;
+
+    &__suggestion {
+      list-style: none;
+      padding: 0.1rem 0 0.1rem 1rem;
+
+      &:hover {
+        background-color: $color-primary-light;
+        cursor: pointer;
+      }
+      &:last-child {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+      }
+    }
+  }
+}

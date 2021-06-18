@@ -16,37 +16,3 @@
   }
 }
 
-.search-list {
-  position: absolute;
-  display: none;
-  top: 100%;
-  left: 5%;
-  width: 90%;
-  background-color: #fff;
-  font-size: 1.2rem;
-  color: $text-secondary;
-  border-top: 1px solid $color-accent;
-  font-family: "Roboto", sans-serif;
-  font-weight: 100;
-  background-color: $color-grey-light-3;
-  padding: 0.5rem 0 0 0;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  z-index: 4;
-  box-shadow: $box-sha-3;
-  transition: width 0.2s, left 0.2s;
-
-  &__suggestion {
-    list-style: none;
-    padding: 0.1rem 0 0.1rem 1rem;
-
-    &:hover {
-      background-color: $color-primary-light;
-      cursor: pointer;
-    }
-    &:last-child {
-      border-bottom-left-radius: 10px;
-      border-bottom-right-radius: 10px;
-    }
-  }
-}

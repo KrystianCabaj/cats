@@ -42,6 +42,7 @@ input.addEventListener("input", function (e) {
     olList.style.display = "none";
     return;
   }
+  // warunek sprwadzający czy jest rasa, jak nie to alert z portfolio
   predictionTimeout = setTimeout(() => {
     const breedName = window.storage.breeds.breedName;
     const filteredBreeds = breedName.filter((character) =>
